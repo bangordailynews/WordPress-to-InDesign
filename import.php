@@ -47,6 +47,8 @@ if ( !$client->query( 'bdn.getPosts', $params ) ) {
 	
 		//By default, the files are saved in a subdirectory files
 		$filename = 'files/' . $id . '.txt';
+		//Maybe consider naming files by title?
+		//$filename = 'files' . $post[ 'title' ] . '.txt';
 		
 		//Check to see if the file exists and whether or not it needs to be updated
 		if ( file_exists( $filename ) && $modified < date( 'Y-m-d H:i:s', filemtime( $filename ) ) ) {
@@ -62,9 +64,16 @@ if ( !$client->query( 'bdn.getPosts', $params ) ) {
 			$caption = false;
 			$byline = false;
 			
+			$custom_fields = array();
+			
 			foreach( $post[ 'custom_fields' ] as $custom_field ) {
 				
+				//Alternative way of accessing custom fields
+				$custom_fields[ $custom_field[ 'key' ] ][] = $custom_field[ 'value' ];
+				
 				//We save the font size and text of a print headline and subheadline as a custom field
+				//This can also be accessed like so:
+				//$print_hed = reset( $custom_fields[ '_print_hed' ] );
 				if( $custom_field[ 'key' ] == '_print_hed' )
 					$print_hed = $custom_field[ 'value' ];
 					
@@ -78,7 +87,7 @@ if ( !$client->query( 'bdn.getPosts', $params ) ) {
 			}
 			
 			//We check to see if there is a custom byline that has been set. If not, we get the authors that are attached to the post
-			if( !$byline ) {
+			if( empty( $byline ) ) {
 				
 				//Per the XMLRPC extender, the authors are sent as an array. There can be multiple authors
 				$authors = $post[ 'wp_author_display_name' ];
@@ -102,8 +111,8 @@ if ( !$client->query( 'bdn.getPosts', $params ) ) {
 			//To start, decode all HTML entities
 			$copy = htmlspecialchars_decode( html_entity_decode( $post[ 'description' ] ) );
 			
-			//Get rid of youtube embeds. You might want to modify this to be a little more greedy, but
-			//at the BDN we use square brackets in stories so we didn't want to risk deleting those
+			//Get rid of youtube embeds. You might want to modify this to be a little more greedy and delete all
+			//shortcodes, but at the BDN we use square brackets in stories so we didn't want to risk deleting those
 			$copy = preg_replace( '/\[youtube=(.*?)>\]/', '', $copy );
 			
 			//Strip tags we don't need. We use h4s for subheadlines, for example, but you can use different tags
@@ -117,6 +126,9 @@ if ( !$client->query( 'bdn.getPosts', $params ) ) {
 			//We want to get rid of closing p tags, convert double line breaks and p tags to returns,
 			//turn bold into bold text and italic into italic text, and turn closing bold and italic tags
 			//back into regular text
+			
+			//BBDN will probably have to be turned into something else depending on your font. Create a test
+			//text box in InDesign and export it as InDesign tagged text to see what styles you'll really need
 			$original = array( '/<\/p>/', '/<br><br>/', '/<p>/', '/<b>/', '/<strong>/', '/<\/b>/', '/<\/strong>/', '/<i>/', '/<em>/', '/<\/i>/', '/<\/em>/' );
 			$replacements = array( '',"\r\n", "\r\n", '<ct:BBDN>', '<ct:BBDN>', '<ct:>', '<ct:>', '<ct:IBDN>', '<ct:IBDN>', '<ct:>', '<ct:>' );
 			$copy = preg_replace( $original, $replacements, $copy );
@@ -125,8 +137,7 @@ if ( !$client->query( 'bdn.getPosts', $params ) ) {
 			//All special characters must come in as unicode. This part shouldn't need modification
 			//It's a little excessive just in case
 			//Convert mdashes to unicode
-			$copy = str_replace('--', '<0x2014>', $copy);
-			$mdashoriginal = array( '/&mdash;/', '/—/' );
+			$mdashoriginal = array( '/&mdash;/', '/—/', '/--/' );
 			$mdashreplace = '<0x2014>';
 			$copy = preg_replace( $mdashoriginal, $mdashreplace, $copy );
 			
