@@ -291,6 +291,17 @@ class BDN_InDesign {
 	
 		if( $_GET[ 'apiKey' ] != $this->api_key )
 			wp_send_json_error( array( 'error' => 'Invalid API Key' ) );
+		
+		//Returns the list of categories (or some other taxonomy you want to filter by)
+		if( !empty( $_GET[ 'filter_list' ] ) ) {
+			
+			$categories = get_categories();
+			$send = array();
+			foreach( $categories as $category )
+				$send[] = $category->slug;
+			wp_send_json_success( $send );
+			
+		}
 
 		//Ooh, this is fun. 
 		//By default, post status are filtered with an OR statement
@@ -307,8 +318,11 @@ class BDN_InDesign {
 			//If we want to widen this, the best way to do would be run get_post_stati and iterate
 			'post_status' => array( 'publish', 'draft', 'pending' ),
 			//Show modified posts up top
-			'orderby' => 'modified'
+			'orderby' => 'modified',
 		);
+		
+		if( !empty( $_GET[ 'filter' ] ) )
+			$args[ 'category_name' ] = $_GET[ 'filter' ];
 
 		//Yay, a query!
 		if( !empty( $_GET[ 's' ] ) ) {
