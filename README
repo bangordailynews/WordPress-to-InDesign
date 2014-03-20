@@ -1,1 +1,3 @@
-A sampler script for how to convert stories in WordPress to InDesign tagged text. More at http://dev.bangordailynews.com.
+This is a WordPress plugin to format posts as Indesign Tagged Text. It is intended to be used in conjunction with the WP Browser.
+
+This is not a plug-and-play plugin. You will have to modify the plugin to set the API key and insert your own paragraph styles.
