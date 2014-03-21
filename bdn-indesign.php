@@ -21,6 +21,8 @@ class BDN_InDesign {
 	 */
 	function BDN_InDesign() {
 
+		register_activation_hook( __FILE__, array( &$this, 'create_folder' ) );
+
 		//Save a text file every time a post is saved
 		add_action( 'save_post', array( &$this, 'generate_files' ), 99, 1 );
 		
@@ -34,6 +36,15 @@ class BDN_InDesign {
 
 	}
 
+	
+	/*
+	 * Create the indesign folder on activation
+	 *
+	 */
+	function create_folder() {
+		$upload_dirs = wp_upload_dir();
+		wp_mkdir_p( $upload_dirs[ 'basedir' ] . '/indesign/' );
+	}
 	
 	/*
 	 * Save the file to wp-content/uploads/indesign/
