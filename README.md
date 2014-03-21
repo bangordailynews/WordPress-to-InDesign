@@ -1,4 +1,5 @@
-Read more/comment/ask questions: http://dev.bangordailynews.com/2014/03/21/wordpress-to-indesign-the-final-countdown/
+__Read more/comment/ask questions: http://dev.bangordailynews.com/2014/03/21/wordpress-to-indesign-the-final-countdown/__
+
 
 This is a WordPress plugin to format posts as Indesign Tagged Text. It is intended to be used in conjunction with the WP Browser.
 
