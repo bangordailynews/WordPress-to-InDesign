@@ -15,3 +15,6 @@ I did this by adding the following line to wp-config.php. There's probably a bet
 
 	if( ( $_SERVER[ 'HTTP_HOST' ] == 'localhost' || empty( $_SERVER[ 'HTTP_HOST' ] ) ) && !empty( $_GET[ 'action' ] ) && ( $_GET[ 'action' ] == 'wp-browser-search' || $_GET[ 'action' ] == 'wp-browser-notify' ) )
 		$_SERVER[ 'HTTP_HOST' ] = 'mysite.com';
+
+#Oh, and...#
+I just ripped a lot of this out of the BDN site. It will definitely require customization. It might break. Email me at wdavis@bangordailynews.com if I did something stupid.
