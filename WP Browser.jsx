@@ -17,7 +17,7 @@ if( appfullName.substr( 0, 14 ) == '/Applications/' ) {
 
 if( WPBrowserSearchServer == ''
 	|| WPBrowserSearchEndpoint == ''
-	|| WPBrowserKey == '' ) {
+	|| WPBrowserApiKey == '' ) {
 
 	alert( 'Please provide settings' );
 	var availableCategories = [];
