@@ -3,6 +3,7 @@
 var WPBrowserApiKey = '';
 var WPBrowserSearchServer = '';
 var WPBrowserSearchEndpoint = '/wp-admin/admin-ajax.php?action=wp-browser-search&apiKey=' + WPBrowserApiKey + '&s=';
+var WPBrowserSearchPort = '80';
 var WPBrowserNotifyServer = WPBrowserSearchServer;
 var WPBrowserNotifyEndpoint = '/wp-admin/admin-ajax.php?action=wp-browser-notify&apiKey=' + WPBrowserApiKey;
 var placeFromServer = true;
@@ -184,7 +185,7 @@ function getURL( server, page ) {
 	conn = new Socket;
 	conn.timeout=30;
 	conn.encoding = 'UTF-8';
-	if( conn.open( server + ':80' ) ) {
+	if( conn.open( server + ':' + WPBrowserSearchPort ) ) {
 		conn.write( 'GET ' + page + ' HTTP/1.0' + "\n\n" );
 		reply = conn.read(999999);
 		conn.close();
