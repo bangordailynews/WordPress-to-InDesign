@@ -6,7 +6,8 @@ var WPBrowserSearchEndpoint = '/wp-admin/admin-ajax.php?action=wp-browser-search
 var WPBrowserSearchPort = '80';
 var WPBrowserNotifyServer = WPBrowserSearchServer;
 var WPBrowserNotifyEndpoint = '/wp-admin/admin-ajax.php?action=wp-browser-notify&apiKey=' + WPBrowserApiKey;
-var placeFromServer = true;
+var placeFromLocalServer = false;
+var searchResults = new Object();
 
 //If we're on a Mac, use a different path than on Windows
 var appfullName = new String( app.fullName );
@@ -92,7 +93,7 @@ importButton.onClick = function() {
 		return;
 	}
 	
-	if( placeFromServer ) {
+	if( placeFromLocalServer ) {
 		//Get the file to place
 		var file = new File( WPBrowserFilePath + selection + '.txt' );
 		if( !file.exists ) { 
@@ -141,7 +142,7 @@ function bdnSearch( searchString ) {
 		return;
 	}
 	
-	var searchResults = eval('(' + resultsJSON + ')');	
+	searchResults = eval('(' + resultsJSON + ')');	
 	
 	results.removeAll();
 
