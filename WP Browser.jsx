@@ -74,7 +74,7 @@ modal.buttons.orientation = 'row';
 var importButton = modal.buttons.add( 'button', undefined, 'Import');
 importButton.onClick = function() {
 
-	if( app.activeDocument.name.indexOf( 'Untitled' ) != -1 ) {
+	if( !app.activeDocument.saved ) {
 		alert( 'Please save your document before placing a story' );
 		return;
 	}
