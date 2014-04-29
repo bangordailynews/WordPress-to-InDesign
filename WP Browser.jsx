@@ -1,5 +1,7 @@
 #targetengine "session";
 
+//@TODO: Implement https://github.com/stdbrouw/Extendables
+
 var WPBrowserApiKey = '';
 var WPBrowserSearchServer = '';
 var WPBrowserSearchEndpoint = '/wp-admin/admin-ajax.php?action=wp-browser-search&apiKey=' + WPBrowserApiKey + '&s=';
