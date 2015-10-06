@@ -241,8 +241,7 @@ class BDN_InDesign {
 						//We use a photo system called Merlin, and print out the ID of the photo if it exists
 						if( ( $merlin_id = get_post_meta( $image->ID, '_merlin_id', TRUE ) ) ) {
 							$identifier = 'Merlin ID: ' . $merlin_id;
-						} else {
-							$photo_file = wp_get_attachment_image_src( $image->ID, 'full' );
+						} elseif( ( $photo_file = wp_get_attachment_image_src( $image->ID, 'full' ) ) && !empty( $photo_file ) && is_array( $photo_file )  ) {
 							$identifier = 'Filename: ' . basename( reset( $photo_file ) );
 						}
 					
