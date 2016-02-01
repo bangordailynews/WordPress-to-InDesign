@@ -20,4 +20,4 @@ I did this by adding the following line to wp-config.php. There's probably a bet
 		$_SERVER[ 'HTTP_HOST' ] = 'mysite.com';
 
 #Oh, and...#
-I just ripped a lot of this out of the BDN site and took a lot of our serious customization out. It will definitely require customization. It might break. Email me at wdavis@bangordailynews.com if I did something stupid. But it's mostly what we're using.
+I just ripped a lot of this out of the BDN site and took a lot of our serious customization out. It will definitely require customization. It might break. Email me at will@wpdavis.com if I did something stupid. But it's mostly what we're using.
